@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency, formatDate, getMemberName } from "@/lib/utils";
 import type { Payment, Member } from "@/lib/types/database";
-import { Plus, CreditCard } from "lucide-react";
+import { Plus, CreditCard, Check, X } from "lucide-react";
 
 export function PaymentsClient({
   payments,
@@ -121,8 +121,12 @@ export function PaymentsClient({
                 <Badge status={payment.status}>{payment.status}</Badge>
                 {payment.status === "pending" && (
                   <div className="flex gap-1">
-                    <Button size="sm" variant="outline" onClick={() => handleStripeSim(payment.id, true)}>Stripe ✓</Button>
-                    <Button size="sm" variant="destructive" onClick={() => handleStripeSim(payment.id, false)}>Stripe ✗</Button>
+                    <Button size="sm" variant="outline" onClick={() => handleStripeSim(payment.id, true)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      Stripe <Check size={14} />
+                    </Button>
+                    <Button size="sm" variant="destructive" onClick={() => handleStripeSim(payment.id, false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      Stripe <X size={14} />
+                    </Button>
                   </div>
                 )}
               </div>

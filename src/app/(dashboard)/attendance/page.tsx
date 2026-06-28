@@ -8,6 +8,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import type { AttendanceRecord, Member } from '@/lib/types';
+import { QrCode, User } from 'lucide-react';
 
 const demoTraffic = [
   { hour: '6 AM', count: 12 }, { hour: '7 AM', count: 25 }, { hour: '8 AM', count: 30 },
@@ -107,7 +108,9 @@ export default function AttendancePage() {
             <p className="page-subtitle">{todayCount} check-ins today</p>
           </div>
           <div className="page-header-actions">
-            <Link href="/attendance/scanner" className="btn btn-primary">📱 QR Scanner</Link>
+            <Link href="/attendance/scanner" className="btn btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <QrCode size={16} /> QR Scanner
+            </Link>
           </div>
         </div>
 
@@ -219,8 +222,16 @@ export default function AttendancePage() {
                     </td>
                     <td>{formatDate(checkin.check_in_time, 'h:mm a')}</td>
                     <td>
-                      <span className={cn('badge', checkin.method === 'qr_code' ? 'badge-active' : 'badge-pending')}>
-                        {checkin.method === 'qr_code' ? '📱 QR Scan' : '✋ Manual'}
+                      <span className={cn('badge', checkin.method === 'qr_code' ? 'badge-active' : 'badge-pending')} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        {checkin.method === 'qr_code' ? (
+                          <>
+                            <QrCode size={12} /> QR Scan
+                          </>
+                        ) : (
+                          <>
+                            <User size={12} /> Manual
+                          </>
+                        )}
                       </span>
                     </td>
                   </tr>

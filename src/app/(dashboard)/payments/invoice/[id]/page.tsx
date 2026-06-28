@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import StatusBadge from '@/components/StatusBadge';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import Image from 'next/image';
+import { Printer, ArrowLeft } from 'lucide-react';
 
 export default function InvoicePage() {
   const params = useParams();
@@ -30,8 +31,12 @@ export default function InvoicePage() {
       <Header title="Invoice" subtitle={`Payments → ${invoice.invoice_number}`} />
       <div className="page-content">
         <div className="no-print" style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-3)', marginBottom: 'var(--space-6)' }}>
-          <button className="btn btn-secondary" onClick={() => window.print()}>🖨️ Print</button>
-          <button className="btn btn-primary" onClick={() => window.history.back()}>← Back</button>
+          <button className="btn btn-secondary" onClick={() => window.print()} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <Printer size={16} /> Print
+          </button>
+          <button className="btn btn-primary" onClick={() => window.history.back()} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <ArrowLeft size={16} /> Back
+          </button>
         </div>
 
         <div className="invoice">

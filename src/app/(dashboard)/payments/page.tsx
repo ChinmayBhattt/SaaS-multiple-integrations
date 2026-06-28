@@ -8,6 +8,7 @@ import { formatCurrency, formatDate, getFullName, getInitials } from '@/lib/util
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import type { Payment, PaymentMethod, PaymentStatus, Member } from '@/lib/types';
+import { DollarSign, Clock, AlertTriangle, FileText } from 'lucide-react';
 
 const demoPayments: (Payment & { member?: Member })[] = [
   { id: '1', member_id: '1', amount: 49.99, status: 'paid', method: 'card', payment_date: '2025-06-01', created_at: '', member: { id: '1', first_name: 'Sarah', last_name: 'Johnson', email: 'sarah@email.com', phone: '', status: 'active', join_date: '', created_at: '', updated_at: '', archived: false } },
@@ -100,21 +101,27 @@ export default function PaymentsPage() {
           <div className="stat-card animate-in">
             <div className="stat-card-header">
               <span className="stat-card-label">Total Revenue</span>
-              <span className="stat-card-icon">💰</span>
+              <span className="stat-card-icon" style={{ color: 'var(--status-active)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <DollarSign size={18} strokeWidth={2} />
+              </span>
             </div>
             <div className="stat-card-value">{formatCurrency(totalRevenue)}</div>
           </div>
           <div className="stat-card animate-in">
             <div className="stat-card-header">
               <span className="stat-card-label">Pending/Overdue</span>
-              <span className="stat-card-icon">⏳</span>
+              <span className="stat-card-icon" style={{ color: 'var(--brand-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Clock size={18} strokeWidth={2} />
+              </span>
             </div>
             <div className="stat-card-value">{formatCurrency(pendingAmount)}</div>
           </div>
           <div className="stat-card animate-in">
             <div className="stat-card-header">
               <span className="stat-card-label">Failed/Overdue</span>
-              <span className="stat-card-icon">⚠️</span>
+              <span className="stat-card-icon" style={{ color: 'var(--status-expired)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <AlertTriangle size={18} strokeWidth={2} />
+              </span>
             </div>
             <div className="stat-card-value" style={{ color: failedCount > 0 ? 'var(--status-expired)' : undefined }}>{failedCount}</div>
           </div>
@@ -174,8 +181,8 @@ export default function PaymentsPage() {
                     <td><StatusBadge status={payment.status} /></td>
                     <td>
                       <div className="table-actions">
-                        <button className="btn btn-ghost btn-sm" onClick={() => generateInvoice(payment)}>
-                          📄 Invoice
+                        <button className="btn btn-ghost btn-sm" onClick={() => generateInvoice(payment)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          <FileText size={14} /> Invoice
                         </button>
                       </div>
                     </td>

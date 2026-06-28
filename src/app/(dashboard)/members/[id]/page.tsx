@@ -8,6 +8,7 @@ import StatusBadge from '@/components/StatusBadge';
 import { getInitials, getFullName, formatDate, formatCurrency, timeAgo, cn } from '@/lib/utils';
 import toast from 'react-hot-toast';
 import type { Member, Payment, AttendanceRecord, MemberNote } from '@/lib/types';
+import { Mail, Phone, Calendar, Edit, Archive, QrCode, User, FileText } from 'lucide-react';
 
 // Demo data
 const demoMember: Member = {
@@ -171,17 +172,29 @@ export default function MemberDetailPage() {
             </h2>
             <div className="member-meta">
               <StatusBadge status={member.status} />
-              <span className="member-meta-item">📧 {member.email}</span>
-              <span className="member-meta-item">📱 {member.phone}</span>
-              <span className="member-meta-item">📅 Joined {formatDate(member.join_date)}</span>
+              <span className="member-meta-item" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <Mail size={14} /> {member.email}
+              </span>
+              <span className="member-meta-item" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <Phone size={14} /> {member.phone}
+              </span>
+              <span className="member-meta-item" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <Calendar size={14} /> Joined {formatDate(member.join_date)}
+              </span>
             </div>
           </div>
           <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
             <button className="btn btn-secondary btn-sm" onClick={() => setIsEditing(!isEditing)}>
-              {isEditing ? 'Cancel' : '✏️ Edit'}
+              {isEditing ? 'Cancel' : (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <Edit size={14} /> Edit
+                </span>
+              )}
             </button>
             <button className="btn btn-danger btn-sm" onClick={handleArchive}>
-              🗄️ Archive
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <Archive size={14} /> Archive
+              </span>
             </button>
           </div>
         </div>
@@ -346,8 +359,16 @@ export default function MemberDetailPage() {
                     <tr key={record.id}>
                       <td>{formatDate(record.check_in_time, 'MMM d, yyyy h:mm a')}</td>
                       <td>
-                        <span className={cn('badge', record.method === 'qr_code' ? 'badge-active' : 'badge-pending')}>
-                          {record.method === 'qr_code' ? '📱 QR Scan' : '✋ Manual'}
+                        <span className={cn('badge', record.method === 'qr_code' ? 'badge-active' : 'badge-pending')} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          {record.method === 'qr_code' ? (
+                            <>
+                              <QrCode size={12} /> QR Scan
+                            </>
+                          ) : (
+                            <>
+                              <User size={12} /> Manual
+                            </>
+                          )}
                         </span>
                       </td>
                       <td style={{ color: 'var(--text-muted)' }}>{timeAgo(record.check_in_time)}</td>
@@ -392,7 +413,9 @@ export default function MemberDetailPage() {
 
             {notes.length === 0 && (
               <div className="empty-state">
-                <div className="empty-state-icon">📝</div>
+                <div className="empty-state-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>
+                  <FileText size={32} strokeWidth={1.5} />
+                </div>
                 <div className="empty-state-title">No notes yet</div>
                 <div className="empty-state-text">Add a note to track interactions with this member</div>
               </div>

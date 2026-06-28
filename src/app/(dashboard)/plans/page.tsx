@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import { formatCurrency } from '@/lib/utils';
 import toast from 'react-hot-toast';
 import type { MembershipPlan, PlanInterval } from '@/lib/types';
+import { Check } from 'lucide-react';
 
 const demoPlans: MembershipPlan[] = [
   { id: '1', name: 'Basic Monthly', description: 'Access to gym floor and cardio equipment', interval: 'monthly', price: 29.99, features: ['Gym floor access', 'Cardio equipment', 'Locker room'], is_active: true, created_at: '', updated_at: '' },
@@ -136,7 +137,9 @@ export default function PlansPage() {
               <ul className="plan-features">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="plan-feature">
-                    <span className="plan-feature-icon">✓</span>
+                    <span className="plan-feature-icon" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--status-active)' }}>
+                      <Check size={14} strokeWidth={3} />
+                    </span>
                     {feature}
                   </li>
                 ))}
