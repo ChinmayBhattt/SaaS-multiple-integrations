@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import { getFullName, getInitials } from '@/lib/utils';
 import toast from 'react-hot-toast';
 import type { Member } from '@/lib/types';
+import { Camera, Play, Square, CheckCircle2 } from 'lucide-react';
 
 export default function ScannerPage() {
   const [scanResult, setScanResult] = useState<string | null>(null);
@@ -124,7 +125,9 @@ export default function ScannerPage() {
             <div className="card" style={{ marginBottom: 'var(--space-6)' }}>
               <div className="card-body">
                 <div className="qr-success">
-                  <div className="qr-success-icon">✅</div>
+                  <div className="qr-success-icon" style={{ color: 'var(--status-active)', display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-3)' }}>
+                    <CheckCircle2 size={48} strokeWidth={2} />
+                  </div>
                   <div className="member-avatar-large" style={{ width: 72, height: 72, fontSize: 'var(--text-2xl)' }}>
                     {getInitials(checkedInMember.first_name, checkedInMember.last_name)}
                   </div>
@@ -160,7 +163,9 @@ export default function ScannerPage() {
                   >
                     {!scanning && (
                       <div style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
-                        <div style={{ fontSize: '3rem', marginBottom: 'var(--space-3)' }}>📷</div>
+                        <div style={{ display: 'flex', justifyContent: 'center', color: 'var(--text-muted)', marginBottom: 'var(--space-3)' }}>
+                          <Camera size={48} strokeWidth={1.5} />
+                        </div>
                         <p style={{ color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>
                           Camera preview will appear here
                         </p>
@@ -169,10 +174,18 @@ export default function ScannerPage() {
                   </div>
                   <button
                     className={`btn ${scanning ? 'btn-danger' : 'btn-primary'} btn-lg`}
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
                     onClick={scanning ? stopScanner : startScanner}
                   >
-                    {scanning ? '⏹ Stop Scanner' : '📱 Start Scanner'}
+                    {scanning ? (
+                      <>
+                        <Square size={18} /> Stop Scanner
+                      </>
+                    ) : (
+                      <>
+                        <Play size={18} /> Start Scanner
+                      </>
+                    )}
                   </button>
                 </div>
               </div>

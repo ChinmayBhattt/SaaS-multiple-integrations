@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Header from '@/components/Header';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
+import { Copy } from 'lucide-react';
 
 export default function SettingsPage() {
   const [gymName, setGymName] = useState('DMVIron');
@@ -130,8 +131,9 @@ export default function SettingsPage() {
                         navigator.clipboard.writeText(`${window.location.origin}${webhook.endpoint}`);
                         toast.success('Copied to clipboard!');
                       }}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                     >
-                      📋 Copy URL
+                      <Copy size={14} /> Copy URL
                     </button>
                   </div>
                   <code style={{

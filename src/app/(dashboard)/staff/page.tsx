@@ -7,6 +7,7 @@ import StatusBadge from '@/components/StatusBadge';
 import { formatDate, timeAgo } from '@/lib/utils';
 import toast from 'react-hot-toast';
 import type { Profile, UserRole } from '@/lib/types';
+import { Shield, User, Check, X } from 'lucide-react';
 
 const demoStaff: Profile[] = [
   { id: '1', email: 'admin@dmviron.com', full_name: 'John Admin', role: 'admin', created_at: '2024-01-01', updated_at: '' },
@@ -109,8 +110,16 @@ export default function StaffPage() {
                     </td>
                     <td>{person.email}</td>
                     <td>
-                      <span className={`badge ${person.role === 'admin' ? 'badge-active' : 'badge-pending'}`}>
-                        {person.role === 'admin' ? '🛡️ Admin' : '👤 Staff'}
+                      <span className={`badge ${person.role === 'admin' ? 'badge-active' : 'badge-pending'}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        {person.role === 'admin' ? (
+                          <>
+                            <Shield size={12} /> Admin
+                          </>
+                        ) : (
+                          <>
+                            <User size={12} /> Staff
+                          </>
+                        )}
                       </span>
                     </td>
                     <td>{formatDate(person.created_at)}</td>
@@ -135,33 +144,35 @@ export default function StaffPage() {
         {/* Role Permissions Info */}
         <div className="grid-2" style={{ marginTop: 'var(--space-8)' }}>
           <div className="card">
-            <div className="card-header">
-              <h3 className="card-title">🛡️ Admin Permissions</h3>
+            <div className="card-header" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Shield size={18} style={{ color: 'var(--brand-primary)' }} />
+              <h3 className="card-title">Admin Permissions</h3>
             </div>
             <div className="card-body">
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
                 {['Full member management', 'Create & manage plans', 'View all payments', 'Manage staff accounts', 'Access AI insights', 'View activity logs', 'Configure settings'].map((perm) => (
                   <li key={perm} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                    <span style={{ color: 'var(--status-active)' }}>✓</span> {perm}
+                    <span style={{ color: 'var(--status-active)', display: 'flex', alignItems: 'center' }}><Check size={14} strokeWidth={3} /></span> {perm}
                   </li>
                 ))}
               </ul>
             </div>
           </div>
           <div className="card">
-            <div className="card-header">
-              <h3 className="card-title">👤 Staff Permissions</h3>
+            <div className="card-header" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <User size={18} style={{ color: 'var(--brand-primary)' }} />
+              <h3 className="card-title">Staff Permissions</h3>
             </div>
             <div className="card-body">
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
                 {['View members', 'Check members in', 'Log payments', 'Add member notes', 'View attendance'].map((perm) => (
                   <li key={perm} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                    <span style={{ color: 'var(--status-active)' }}>✓</span> {perm}
+                    <span style={{ color: 'var(--status-active)', display: 'flex', alignItems: 'center' }}><Check size={14} strokeWidth={3} /></span> {perm}
                   </li>
                 ))}
                 {['Manage staff', 'Delete members', 'Configure settings', 'Access AI insights'].map((perm) => (
                   <li key={perm} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                    <span style={{ color: 'var(--status-expired)' }}>✕</span> {perm}
+                    <span style={{ color: 'var(--status-expired)', display: 'flex', alignItems: 'center' }}><X size={14} strokeWidth={3} /></span> {perm}
                   </li>
                 ))}
               </ul>

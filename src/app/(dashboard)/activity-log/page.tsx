@@ -5,6 +5,22 @@ import { createClient } from '@/lib/supabase/client';
 import Header from '@/components/Header';
 import { timeAgo } from '@/lib/utils';
 import type { ActivityLogEntry } from '@/lib/types';
+import {
+  UserPlus,
+  Edit2,
+  Archive,
+  CalendarCheck,
+  CreditCard,
+  XCircle,
+  FileText,
+  Gem,
+  Link as LinkIcon,
+  RefreshCw,
+  Shield,
+  MessageSquare,
+  Settings,
+  Pin
+} from 'lucide-react';
 
 const demoActivity: ActivityLogEntry[] = [
   { id: '1', staff_id: '1', action: 'member_checked_in', entity_type: 'attendance', entity_id: '1', details: { member_name: 'Sarah Johnson', method: 'qr_code' }, created_at: new Date(Date.now() - 300000).toISOString(), staff: { id: '1', email: '', full_name: 'Front Desk', role: 'staff', created_at: '', updated_at: '' } },
@@ -17,21 +33,21 @@ const demoActivity: ActivityLogEntry[] = [
   { id: '8', staff_id: '1', action: 'member_archived', entity_type: 'member', entity_id: '8', details: { member_name: 'David Brown' }, created_at: new Date(Date.now() - 172800000).toISOString(), staff: { id: '1', email: '', full_name: 'Admin', role: 'admin', created_at: '', updated_at: '' } },
 ];
 
-const actionIcons: Record<string, string> = {
-  member_created: '👤',
-  member_updated: '✏️',
-  member_archived: '🗄️',
-  member_checked_in: '📋',
-  payment_logged: '💳',
-  payment_failed: '❌',
-  invoice_generated: '📄',
-  plan_created: '💎',
-  plan_updated: '💎',
-  subscription_created: '🔗',
-  subscription_changed: '🔄',
-  staff_created: '🛡️',
-  note_added: '📝',
-  settings_updated: '⚙️',
+const actionIcons: Record<string, React.ComponentType<any>> = {
+  member_created: UserPlus,
+  member_updated: Edit2,
+  member_archived: Archive,
+  member_checked_in: CalendarCheck,
+  payment_logged: CreditCard,
+  payment_failed: XCircle,
+  invoice_generated: FileText,
+  plan_created: Gem,
+  plan_updated: Gem,
+  subscription_created: LinkIcon,
+  subscription_changed: RefreshCw,
+  staff_created: Shield,
+  note_added: MessageSquare,
+  settings_updated: Settings,
 };
 
 const actionLabels: Record<string, string> = {
@@ -102,9 +118,12 @@ export default function ActivityLogPage() {
             <div className="activity-timeline">
               {filteredActivities.map((activity) => (
                 <div key={activity.id} className="activity-item">
-                  <div className="activity-item-header">
-                    <span style={{ fontSize: 'var(--text-base)' }}>
-                      {actionIcons[activity.action] || '📌'}
+                  <div className="activity-item-header" style={{ gap: '8px' }}>
+                    <span style={{ display: 'flex', alignItems: 'center', color: 'var(--brand-primary)' }}>
+                      {(() => {
+                        const IconComponent = actionIcons[activity.action] || Pin;
+                        return <IconComponent size={16} />;
+                      })()}
                     </span>
                     <span className="activity-item-user">
                       {activity.staff?.full_name || 'System'}
